@@ -3,12 +3,11 @@
  * @package Shiekh.com
  * @author Siaržuk Piatroŭski (siarzuk@piatrouski.com)
  */
-
 namespace BelVG\AdditionalImageTemplate\Plugin;
 
-use \Magento\Catalog\Model\Category\DataProvider as Subject;
+use \Magento\Catalog\Model\Category as Subject;
 
-class DataProviderPlugin
+class CategoryPlugin
 {
     /**
      * Store manager
@@ -37,32 +36,29 @@ class DataProviderPlugin
     }
 
     /**
+     * Around get data for preprocess image
+     *
      * @param Subject $subject
      * @param \Closure $proceed
-     * @return array
+     * @param string $key
+     * @param null $index
+     * @return mixed|string
      */
     public function aroundGetData(
         Subject $subject,
-        \Closure $proceed
+        \Closure $proceed,
+        $key = '',
+        $index = null
     ) {
-        $result = $proceed();
-
-        $category = $subject->getCurrentCategory();
-        if ($category) {
-            $categoryData = $category->getData();
-
-            if (isset($categoryData[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])) {
-                unset($categoryData[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]);
-
-                $result[$category->getId()][\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME] = array(
-                    array(
-                        'name' => $category->getData(\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME),
-                        'url' => $this->_helper->getImageUrl($category),
-                    )
-                );
+        if ($key == \BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME) {
+            $result = $proceed($key, $index);
+            if ($result) {
+                return $this->_helper->getUrl($result);
+            } else {
+                return $result;
             }
         }
 
-        return $result;
+        return $proceed($key, $index);
     }
 }

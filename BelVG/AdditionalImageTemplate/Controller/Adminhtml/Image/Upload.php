@@ -50,7 +50,7 @@ class Upload
     public function execute()
     {
         try {
-            $result = $this->imageUploader->saveFileToTmpDir('additional_image');
+            $result = $this->imageUploader->saveFileToTmpDir(\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME);
 
             $result['cookie'] = [
                 'name' => $this->_getSession()->getName(),

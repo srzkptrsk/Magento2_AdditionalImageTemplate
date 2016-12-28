@@ -28,20 +28,22 @@ class CatalogCategoryPrepareSaveObserver
     {
         $data = $rawData;
 
-        if (empty($data['additional_image'])) {
-            unset($data['additional_image']);
-            $data['additional_image']['delete'] = true;
+        if (empty($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])) {
+            unset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]);
+            $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]['delete'] = true;
         }
 
         // @todo It is a workaround to prevent saving this data in category model and it has to be refactored in future
-        if (isset($data['additional_image']) && is_array($data['additional_image'])) {
-            if (!empty($data['additional_image']['delete'])) {
-                $data['additional_image'] = null;
+        if (isset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])
+            && is_array($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])
+        ) {
+            if (!empty($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]['delete'])) {
+                $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME] = null;
             } else {
-                if (isset($data['additional_image'][0]['name']) && isset($data['additional_image'][0]['tmp_name'])) {
-                    $data['additional_image'] = $data['additional_image'][0]['name'];
+                if (isset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME][0]['name']) && isset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME][0]['tmp_name'])) {
+                    $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME] = $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME][0]['name'];
                 } else {
-                    unset($data['additional_image']);
+                    unset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]);
                 }
             }
         }
