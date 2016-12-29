@@ -1,7 +1,21 @@
 <?php
 /**
- * @package Shiekh.com
- * @author Siaržuk Piatroŭski (siarzuk@piatrouski.com)
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+ ********************************************************************
+ *
+ * @category   BelVG
+ * @package    BelVG_AdditionalImageTemplate
+ * @author     Siaržuk Piatroŭski (siarzuk@piatrouski.com)
+ * @copyright  Copyright (c) 2010 - 2017 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 
 namespace BelVG\AdditionalImageTemplate\Helper;
@@ -31,20 +45,9 @@ class Data
      */
     public function getImageUrl(\Magento\Catalog\Model\Category $category)
     {
-        $url = false;
         $image = $category->getData(self::ATTRIBUTE_NAME);
-        if ($image) {
-            if (is_string($image)) {
-                $url = $this->_storeManager->getStore()->getBaseUrl(
-                        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                    ) . 'catalog/category/' . $image;
-            } else {
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Something went wrong while getting the image url.')
-                );
-            }
-        }
-        return $url;
+        
+        return $this->getUrl($image);
     }
 
     /**
@@ -52,20 +55,21 @@ class Data
      *
      * @return string
      */
-    public function getUrl($attributeName)
+    public function getUrl($value)
     {
         $url = false;
-        if ($attributeName) {
-            if (is_string($attributeName)) {
+        if ($value) {
+            if (is_string($value)) {
                 $url = $this->_storeManager->getStore()->getBaseUrl(
                         \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                    ) . 'catalog/category/' . $attributeName;
+                    ) . 'catalog/category/' . $value;
             } else {
                 throw new \Magento\Framework\Exception\LocalizedException(
                     __('Something went wrong while getting the image url.')
                 );
             }
         }
+        
         return $url;
     }
 }
