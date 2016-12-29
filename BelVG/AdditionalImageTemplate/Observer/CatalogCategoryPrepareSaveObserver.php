@@ -41,23 +41,26 @@ class CatalogCategoryPrepareSaveObserver
     protected function _postData(array $rawData)
     {
         $data = $rawData;
+        $attributeName = \BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME;
 
-        if (empty($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])) {
-            unset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]);
-            $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]['delete'] = true;
+        if (empty($data[$attributeName])) {
+            unset($data[$attributeName]);
+            $data[$attributeName]['delete'] = true;
         }
 
         // @todo It is a workaround to prevent saving this data in category model and it has to be refactored in future
-        if (isset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])
-            && is_array($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME])
+        if (isset($data[$attributeName])
+            && is_array($data[$attributeName])
         ) {
-            if (!empty($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]['delete'])) {
-                $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME] = null;
+            if (!empty($data[$attributeName]['delete'])) {
+                $data[$attributeName] = null;
             } else {
-                if (isset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME][0]['name']) && isset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME][0]['tmp_name'])) {
-                    $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME] = $data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME][0]['name'];
+                if (isset($data[$attributeName][0]['name'])
+                    && isset($data[$attributeName][0]['tmp_name'])
+                ) {
+                    $data[$attributeName] = $data[$attributeName][0]['name'];
                 } else {
-                    unset($data[\BelVG\AdditionalImageTemplate\Helper\Data::ATTRIBUTE_NAME]);
+                    unset($data[$attributeName]);
                 }
             }
         }
