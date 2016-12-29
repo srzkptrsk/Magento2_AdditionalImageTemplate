@@ -20,7 +20,7 @@
 
 namespace BelVG\AdditionalImageTemplate\Plugin;
 
-use \Magento\Catalog\Model\Category\DataProvider as Subject;
+use Magento\Catalog\Model\Category\DataProvider as Subject;
 
 class DataProviderPlugin
 {
