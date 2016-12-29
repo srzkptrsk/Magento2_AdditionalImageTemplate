@@ -20,7 +20,7 @@
  
 namespace BelVG\AdditionalImageTemplate\Plugin;
 
-use \Magento\Catalog\Model\Category as Subject;
+use Magento\Catalog\Model\Category as Subject;
 
 class CategoryPlugin
 {
